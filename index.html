@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DIVI Connect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="DIVI Connect">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1B2E45">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #EEF1F4; color: #1B2E45; }
+  .wrap { max-width: 460px; margin: 0 auto; min-height: 100vh; background: #fff; padding: 24px 22px 40px; text-align: center; }
+  .wrap > img { width: 260px; max-width: 80%; margin: 8px auto 6px; display: block; }
+  h1 { font-size: 22px; margin: 10px 0 4px; }
+  p { font-size: 15px; color: #3E4954; line-height: 1.5; margin: 6px 0; }
+  .go { display: block; background: #2E7D32; color: #fff; text-decoration: none; font-weight: 800; font-size: 20px; letter-spacing: .5px; padding: 20px; border-radius: 12px; margin: 22px 0 8px; }
+  .card { text-align: left; background: #F4F6F9; border-radius: 12px; padding: 16px 16px 10px; margin-top: 22px; }
+  .card h2 { font-size: 17px; margin: 0 0 12px; display: flex; align-items: center; gap: 12px; }
+  ol { margin: 0; padding-left: 22px; } li { font-size: 15px; line-height: 1.5; margin-bottom: 8px; }
+  .icon { width: 64px; height: 64px; border-radius: 14px; vertical-align: middle; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  .hide { display: none; }
+  .fine { font-size: 12px; color: #6B7682; margin-top: 22px; }
+  #launch { position: fixed; inset: 0; background: #1B2E45; display: none; align-items: center; justify-content: center; flex-direction: column; color: #fff; }
+  #launch img { width: 120px; height: 120px; border-radius: 26px; }
+  #launch div { margin-top: 18px; font-size: 15px; opacity: .85; }
+</style>
+</head>
+<body>
+<!-- Shown when opened from the home-screen icon: goes straight to the time clock -->
+<div id="launch"><img src="icon-512.png" alt=""><div>Opening DIVI Connect...</div></div>
+
+<div class="wrap" id="page">
+  <img src="logo.png" alt="DIVI Connect">
+  <h1>DIVI Connect</h1>
+  <p>Sign in and out of work from your phone.</p>
+  <a class="go" id="openBtn" href="#">OPEN DIVI CONNECT</a>
+
+  <div class="card" id="ios">
+    <h2><img class="icon" src="apple-touch-icon.png" alt=""> Put it on your iPhone home screen</h2>
+    <ol>
+      <li>Make sure this page is open in <b>Safari</b>.</li>
+      <li>Tap the <b>Share</b> button (square with an arrow up).</li>
+      <li>Scroll down and tap <b>Add to Home Screen</b>, then <b>Add</b>.</li>
+      <li>From now on, tap the <b>DIVI Connect</b> icon to sign in and out.</li>
+    </ol>
+  </div>
+  <div class="card hide" id="android">
+    <h2><img class="icon" src="icon-192.png" alt=""> Put it on your Android home screen</h2>
+    <ol>
+      <li>Make sure this page is open in <b>Chrome</b>.</li>
+      <li>Tap the <b>&#8942;</b> menu (top right).</li>
+      <li>Tap <b>Add to Home screen</b> (or <b>Install app</b>), then <b>Add</b>.</li>
+      <li>From now on, tap the <b>DIVI Connect</b> icon to sign in and out.</li>
+    </ol>
+  </div>
+  <div class="fine">DIVI Mechanical Contractors Ltd. &middot; Company use only</div>
+</div>
+
+<script>
+  // The one place to change the time clock link:
+  var CLOCK_URL = 'https://script.google.com/macros/s/AKfycbzP5SE77Bh4QwMpKCg6q40aMnqU347Ho0Lzd7BEIaRDmu_gP7bsz-rhBnsYhIpiNZyR/exec';
+
+  document.getElementById('openBtn').href = CLOCK_URL;
+  if (/android/i.test(navigator.userAgent)) {
+    document.getElementById('ios').classList.add('hide');
+    document.getElementById('android').classList.remove('hide');
+  }
+  // Opened from the home-screen icon -> go straight to the time clock.
+  var fromIcon = window.navigator.standalone === true ||
+                 (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  if (fromIcon) {
+    document.getElementById('page').classList.add('hide');
+    document.getElementById('launch').style.display = 'flex';
+    window.location.replace(CLOCK_URL);
+  }
+</script>
+</body>
+</html>
